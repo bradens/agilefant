@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import fi.hut.soberit.agilefant.business.DatabaseBackupBusiness;
 import fi.hut.soberit.agilefant.db.DatabaseBackupDAO;
 import fi.hut.soberit.agilefant.model.DatabaseBackup;
+import fi.hut.soberit.agilefant.util.DbConnectionInfo;
 
 @Service("databaseBackupBusiness")
 @Transactional
@@ -14,6 +15,7 @@ public class DatabaseBackupBusinessImpl extends GenericBusinessImpl<DatabaseBack
         DatabaseBackupBusiness {
 
     private DatabaseBackupDAO databaseBackupDAO;
+    private DbConnectionInfo dbinfo;
     
     @Autowired
     public void setDatabaseBackupDAO(DatabaseBackupDAO dbbDAO) {
@@ -23,5 +25,9 @@ public class DatabaseBackupBusinessImpl extends GenericBusinessImpl<DatabaseBack
 
     public DatabaseBackupBusinessImpl() {
         super(DatabaseBackup.class);
+    }
+    
+    public void backupAnonymous() {
+       dbinfo = this.databaseBackupDAO.getDbInfo();
     }
 }
